@@ -14,7 +14,7 @@ You have been asked to install Azure Firewall. This will help your organization 
 - A virtual network with a workload subnet and a jump host subnet.
 - A virtual machine is each subnet. 
 - A custom route that ensures all outbound workload traffic from the workload subnet must use the firewall.
-- Firewall Application rules that only allow outbound traffic to www.bing.com. 
+- Firewall Application rules that only allow outbound traffic to www.google.com. 
 - Firewall Network rules that allow external DNS server lookups.
 
 > For all the resources in this lab, we are using the **East US** region. Verify with your instructor this is the region to use for class. 
@@ -70,7 +70,7 @@ In this task, you will create a virtual machine by using an ARM template. This v
    |Setting|Value|
    |---|---|
    |Subscription|the name of the Azure subscription you will be using in this lab|
-   |Resource group|click **Create new** and type the name **AZ500LAB08**|
+   |Resource group|click **Create new** and type the name **AZ500-FW-RG**|
    |Location|**(US) East US**|
 
     >**Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
@@ -91,11 +91,11 @@ In this task you will deploy the Azure firewall into the virtual network.
 
    |Setting|Value|
    |---|---|
-   |Resource group|**AZ500LAB08**|
-   |Name|**Test-FW01**|
+   |Resource group|**AZ500-FW-RG**|
+   |Name|**FW01**|
    |Region|**(US) East US**|
-   |Choose a virtual network|click the **Use existing** option and, in the drop-down list, select **Test-FW-VN**|
-   |Public IP address|clck **Add new** and type the name **TEST-FW-PIP** and click **OK**|
+   |Choose a virtual network|click the **Use existing** option and, in the drop-down list, select **AZ500-FW-VN**|
+   |Public IP address|clck **Add new** and type the name **AZ500-FW-PIP** and click **OK**|
 
 1. Click **Review + create** and then click **Create**. 
 
@@ -103,13 +103,13 @@ In this task you will deploy the Azure firewall into the virtual network.
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Resource groups** and press the **Enter** key.
 
-1. On the **Resource groups** blade, in the list of resource group, click the **AZ500LAB08** entry.
+1. On the **Resource groups** blade, in the list of resource group, click the **AZ500-FW-RG** entry.
 
-    >**Note**: On the **AZ500LAB08** resource group blade, review the list of resources. You can sort by **Type**.
+    >**Note**: On the **AZ500-FW-RG** resource group blade, review the list of resources. You can sort by **Type**.
 
-1. In the list of resources, click the entry representing the **Test-FW01** firewall.
+1. In the list of resources, click the entry representing the **FW01** firewall.
 
-1. On the **Test-FW01** blade, identify the **Private IP** address that was assigned to the firewall. 
+1. On the **FW01** blade, identify the **Private IP** address that was assigned to the firewall. 
 
     >**Note**: You will need this information in the next task.
 
@@ -127,7 +127,7 @@ In this task, you will create a default route for the **Workload-SN** subnet. Th
    |Setting|Value|
    |---|---|
    |Name|**Firewall-route**|
-   |Resource group|**AZ500LAB08**|
+   |Resource group|**AZ500-FW-RG**|
 
 1. Click **Create** and wait for the provisioning to complete. 
 
@@ -139,7 +139,7 @@ In this task, you will create a default route for the **Workload-SN** subnet. Th
 
    |Setting|Value|
    |---|---|
-   |Virtual network|**Test-FW-VN**|
+   |Virtual network|**AZ500-FW-VN**|
    |Subnet|**Workload-SN**|
 
     >**Note**: Ensure the **Workload-SN** subnet is selected for this route, otherwise the firewall won't work correctly.
@@ -164,19 +164,19 @@ In this task, you will create a default route for the **Workload-SN** subnet. Th
 
 #### Task 4: Configure an application rule
 
-In this task you will create an application rule that allows outbound access to `www.bing.com`.
+In this task you will create an application rule that allows outbound access to `www.google.com`.
 
-1. In the Azure portal, navigate back to the **Test-FW01** firewall.
+1. In the Azure portal, navigate back to the **FW01** firewall.
 
-1. On the **Test-FW01** blade, in the **Settings** section, click **Rules**.
+1. On the **FW01** blade, in the **Settings** section, click **Rules**.
 
-1. On the **Test-FW01 \| Rules** blade, click the **Application rule collection** tab, and then click **+ Add application rule collection**.
+1. On the **FW01 \| Rules** blade, click the **Application rule collection** tab, and then click **+ Add application rule collection**.
 
 1. On the **Add application rule collection** blade, specify the following settings (leave others with their default values):
 
    |Setting|Value|
    |---|---|
-   |Name|**App-Coll01**|
+   |Name|**AC01**|
    |Priority|**200**|
    |Action|**Allow**|
 
@@ -188,7 +188,7 @@ In this task you will create an application rule that allows outbound access to 
    |Source type|**IP Address**|
    |Source|**10.0.2.0/24**|
    |Protocol port|**http:80, https:443**|
-   |Target FQDNS|**www.bing.com**|
+   |Target FQDNS|**www.google.com**|
 
 1. Click **Add** to add the Target FQDNs-based application rule.
 
@@ -198,15 +198,15 @@ In this task you will create an application rule that allows outbound access to 
 
 In this task, you will create a network rule that allows outbound access to two IP addresses on port 53 (DNS).
 
-1. In the Azure portal, navigate back to the **Test-FW01 \| Rules** blade.
+1. In the Azure portal, navigate back to the **FW01 \| Rules** blade.
 
-1. On the **Test-FW01 \| Rules** blade, click the **Network rule collection** tab and then click **+ Add network rule collection**.
+1. On the **FW01 \| Rules** blade, click the **Network rule collection** tab and then click **+ Add network rule collection**.
 
 1. On the **Add network rule collection** blade, specify the following settings (leave others with their default values):
 
    |Setting|Value|
    |---|---|
-   |Name|**Net-Coll01**|
+   |Name|**NC01**|
    |Priority|**200**|
    |Action|**Allow**|
 
@@ -230,9 +230,9 @@ In this task, you will create a network rule that allows outbound access to two 
 
 In this task, you will configure the primary and secondary DNS addresses for the virtual machine. This not a firewall requirement. 
 
-1. In the Azure portal, navigate back to the **AZ500LAB08** resource group.
+1. In the Azure portal, navigate back to the **AZ500-FW-RG** resource group.
 
-1. On the **AZ500LAB08** blade, in the list of resources, click the **Srv-Work** virtual machine.
+1. On the **AZ500-FW-RG** blade, in the list of resources, click the **Srv-Work** virtual machine.
 
 1. On the **Srv-Work** blade, in the **Settings** section, click **Networking**.
 
@@ -250,9 +250,9 @@ In this task, you will configure the primary and secondary DNS addresses for the
 
 In this task, you will test the firewall to confirm that it works as expected.
 
-1. In the Azure portal, navigate back to the **AZ500LAB08** resource group.
+1. In the Azure portal, navigate back to the **AZ500-FW-RG** resource group.
 
-1. On the **AZ500LAB08** blade, in the list of resources, click the **Srv-Jump** virtual machine.
+1. On the **AZ500-FW-RG** blade, in the list of resources, click the **Srv-Jump** virtual machine.
 
 1. On the **Srv-Jump** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
@@ -286,7 +286,7 @@ In this task, you will test the firewall to confirm that it works as expected.
 
 1. In the **Internet Explorer Enhanced Security Configuration** dialog box, set both options to **Off** and click **OK**.
 
-1. Within the Remote Desktop session to **Srv-Work**, start Internet Explorer and browse to **`https://www.bing.com`**. 
+1. Within the Remote Desktop session to **Srv-Work**, start Internet Explorer and browse to **`https://www.google.com`**. 
 
     >**Note**: The website should successfully display. The firewall allows you access.
 
@@ -309,6 +309,6 @@ In this task, you will test the firewall to confirm that it works as expected.
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource group you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB08" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-FW-RG" -Force -AsJob
     ```
 1. Close the **Cloud Shell** pane. 
