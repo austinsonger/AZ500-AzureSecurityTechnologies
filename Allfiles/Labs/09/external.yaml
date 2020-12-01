@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginxinternal
+  name: external
 spec:
   replicas: 1
   selector:
     matchLabels:
-     app: nginxinternal
+     app: external
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,13 +15,13 @@ spec:
   template:
     metadata:
       labels:
-        app: nginxinternal
+        app: external
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
       - name: nginx
-        image: <ACRUniquename>.azurecr.io/sample/nginx:v1
+        image: <ACRUniquename>.azurecr.io/az500/nginx:v1
         ports:
         - containerPort: 80
         resources:
@@ -33,13 +33,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginxinternal
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  name: external
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: nginxinternal
----
+    app: external
