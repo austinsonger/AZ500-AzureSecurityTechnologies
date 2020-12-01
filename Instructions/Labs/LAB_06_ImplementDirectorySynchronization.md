@@ -5,7 +5,7 @@ lab:
 ---
 
 # Lab 06: Implement Directory Synchronization
-# Student lab manual
+# johndoe lab manual
 
 ## Lab scenario
 
@@ -49,7 +49,7 @@ In this task, you will identify a DNS name for your Azure VM deployment.
 1. In the PowerShell session within the Cloud Shell pane, run the following to identify an available DNS name you can use for an Azure VM deployment in the next task of this exercise:
 
     ```powershell
-    Test-AzDnsAvailability -DomainNameLabel <custom-label> -Location '<location>'
+    Test-AzDnsAvailability -DomainNameLabel az500 -Location 'eastus'
     ```
 
     >**Note**: Replace the `<custom-label>` placeholder with a valid DNS name that is likely to be globlly unique. Replace the `<location>` placeholder with the name of the region into which you want to deploy the Azure VM that will host the Active Directory domain controller you will use in this lab.
@@ -79,12 +79,12 @@ In this task, you will deploy an Azure VM that will host an Active Directory dom
    |Setting|Value|
    |---|---|
    |Subscription|the name of you Azure subscription|
-   |Resource group|click **Create new** and type the name **AZ500LAB06**|
+   |Resource group|click **Create new** and type the name **AZ500-SYN-RG**|
    |Dns Prefix|the DNS hostname you identified in the previous task|
    |Location|the Azure region you identified in the previous task|
-   |Admin Username|**Student**|
+   |Admin Username|**johndoe**|
    |Admin Password|**Pa55w.rd1234**|
-   |Domain Name|**adatum.com**|
+   |Domain Name|**1aboveall.com**|
    |VM Size|**Standard_D2s_v3**|
 
 1. On the **Create an Azure VM with a new AD Forest** blade, click **Review + create**, and then click **Create**.
@@ -118,7 +118,7 @@ In this task, you will create a new Azure AD tenant to use in this lab.
 
    |Setting|Value|
    |---|---|
-   |Organization name|**AdatumSync**|
+   |Organization name|**oneaboveallsync**|
    |Initial domain name|a unique name consisting of a combination of letters and digits|
    |Country or region|**United States**|
 
@@ -136,25 +136,25 @@ In this task, you will add your custom DNS name to the new Azure AD tenant.
 
 1. In the Azure portal, in the toolbar, click the **Directory + subscription** icon, located to the right of the Cloud Shell icon. 
 
-1. In the **Directory + subscription** blade, click the newly created tenant, **AdatumSync**.
+1. In the **Directory + subscription** blade, click the newly created tenant, **oneaboveallsync**.
 
-    >**Note**: You may need to refresh the browser window if the **AdatumSync** entry does not appear in the **Directory + subscription** filter list.
+    >**Note**: You may need to refresh the browser window if the **oneaboveallsync** entry does not appear in the **Directory + subscription** filter list.
 
-1. On the **AdatumSync** blade, in the in the **Manage** section, click **Custom domain names**.
+1. On the **oneaboveallsync** blade, in the in the **Manage** section, click **Custom domain names**.
 
-1. On the **AdatumSync \| Custom domain names** blade, click **+ Add custom domain**.
+1. On the **oneaboveallsync \| Custom domain names** blade, click **+ Add custom domain**.
 
-1. On the **Custom domain name** blade, in the **Custom domain name** text box, type **adatum.com** and click **Add Domain**.
+1. On the **Custom domain name** blade, in the **Custom domain name** text box, type **1aboveall.com** and click **Add Domain**.
 
-1. On the **adatum.com** blade, review the information necessary to perform verification of the Azure AD domain name.
+1. On the **1aboveall.com** blade, review the information necessary to perform verification of the Azure AD domain name.
 
-    >**Note**: You will not be able to complete the validation process because you do not own the **adatum.com** DNS domain name. This will not prevent you from synchronizing the **adatum.com** AD DS domain with the Azure AD tenant. You will use for this purpose the initial DNS name of the Azure AD tenant (the name ending with the **onmicrosoft.com** suffix), which you identified in the previous task. However, keep in mind that, as a result, the DNS domain name of the AD DS domain and the DNS name of the Azure AD tenant will differ. This means that Adatum users will need to use different names when signing in to the AD DS domain and when signing in to Azure AD tenant.
+    >**Note**: You will not be able to complete the validation process because you do not own the **1aboveall.com** DNS domain name. This will not prevent you from synchronizing the **1aboveall.com** AD DS domain with the Azure AD tenant. You will use for this purpose the initial DNS name of the Azure AD tenant (the name ending with the **onmicrosoft.com** suffix), which you identified in the previous task. However, keep in mind that, as a result, the DNS domain name of the AD DS domain and the DNS name of the Azure AD tenant will differ. This means that 1ABOVEALL users will need to use different names when signing in to the AD DS domain and when signing in to Azure AD tenant.
 
 #### Task 3: Create an Azure AD user with the Global Administrator role
 
 In this task, you will add a new Azure AD user and assign them to the Global Administrator role. 
 
-1. On the **AdatumSync** Azure AD tenant blade, in the **Manage** section, click **Users**.
+1. On the **oneaboveallsync** Azure AD tenant blade, in the **Manage** section, click **Users**.
 
 1. On the **Users \| All users** blade, click **+ New User**. 
 
@@ -162,8 +162,8 @@ In this task, you will add a new Azure AD user and assign them to the Global Adm
 
    |Setting|Value|
    |---|---|
-   |User name|**syncadmin**|
-   |Name|**syncadmin**|
+   |User name|**oaaadmin**|
+   |Name|**oaaadmin**|
    |Password|ensure that the option **Auto-generate password** is selected and click **Show Password**|
    |Groups|**0 groups selected**|
    |Roles|click **User**, then click **Global administrator**, and click **Select**|
@@ -177,11 +177,11 @@ In this task, you will add a new Azure AD user and assign them to the Global Adm
 
 1. Open an InPrivate browser window.
 
-1. Navigate to the Azure portal and sign in using the **syncadmin** user account. When prompted, change the password you recorded earlier in this task to **Pa55w.rd1234**.
+1. Navigate to the Azure portal and sign in using the **oaaadmin** user account. When prompted, change the password you recorded earlier in this task to **Pa55w.rd1234**.
 
-    >**Note**: To sign in you will need to provide a fully qualified name of the **syncadmin** user account, including the Azure AD tenant DNS domain name, which you recorded earlier in this task. This user name is in the format syncadmin@`<your_tenant_name>`.onmicrosoft.com, where `<your_tenant_name>` is the placeholder representing your unique Azure AD tenant name. 
+    >**Note**: To sign in you will need to provide a fully qualified name of the **oaaadmin** user account, including the Azure AD tenant DNS domain name, which you recorded earlier in this task. This user name is in the format oaaadmin@`<your_tenant_name>`.onmicrosoft.com, where `<your_tenant_name>` is the placeholder representing your unique Azure AD tenant name. 
 
-1. Sign out as **syncadmin** and close the InPrivate browser window.
+1. Sign out as **oaaadmin** and close the InPrivate browser window.
 
 > **Result**: After you completed this exercise, you have created an Azure AD tenant, added a custom DNS name to the new Azure AD tenant, and created an Azure AD user with the Global Administrator role.
 
@@ -206,20 +206,20 @@ In this task, you will connect to the Azure VM running AD DS domain controller a
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Virtual machines** and press the **Enter** key.
 
-1. On the **Virtual machines** blade, click the **adVM** entry. 
+1. On the **Virtual machines** blade, click the **1aaVM** entry. 
 
-1. On the **adVM** blade, click **Connect** and, in the drop down menu, click **RDP**. 
+1. On the **1aaVM** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
-1. Click **Download RDP File** and use it to connect to the **adVM** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
+1. Click **Download RDP File** and use it to connect to the **1aaVM** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
 
    |Setting|Value|
    |---|---|
-   |User name|**Student**|
+   |User name|**johndoe**|
    |Password|**Pa55w.rd1234**|
 
     >**Note**: Wait for the Remote Desktop session and **Server Manager** to load.  
 
-    >**Note**: The following steps are performed in the Remote Desktop session to the **adVM** Azure VM. 
+    >**Note**: The following steps are performed in the Remote Desktop session to the **1aaVM** Azure VM. 
 
 1. In **Server Manager**, click **Local Server** and then click **IE Enhanced Security Configuration**.
 
@@ -227,7 +227,7 @@ In this task, you will connect to the Azure VM running AD DS domain controller a
 
 1. In **Server Manager**, click **Tools** and, in the drop-down menu, click **Active Directory Administrative Center**.
 
-1. In **Active Directory Administrative Center**, click **adatum (local)**, in the **Tasks** pane, click **New**, and, in the cascading menu, click **Organizational Unit**.
+1. In **Active Directory Administrative Center**, click **1ABOVEALL (local)**, in the **Tasks** pane, click **New**, and, in the cascading menu, click **Organizational Unit**.
 
 1. In the **Create Organizational Unit** window, in the **Name** text box, type **ToSync** and click **OK**.
 
@@ -239,9 +239,9 @@ In this task, you will connect to the Azure VM running AD DS domain controller a
 
    |Setting|Value|
    |---|---|
-   |Full Name|**aduser1**|
-   |User UPN logon|**aduser1**|
-   |User SamAccountName logon|**aduser1**|
+   |Full Name|**1aauser**|
+   |User UPN logon|**1aauser**|
+   |User SamAccountName logon|**1aauser**|
    |Password|**Pa55w.rd1234**|
    |Other password options|**Password never expires**|
 
@@ -249,13 +249,13 @@ In this task, you will connect to the Azure VM running AD DS domain controller a
 
 In this task, you will install AD Connect on the virtual machine. 
 
-1. Within the Remote Desktop session to **adVM**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **syncadmin** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
+1. Within the Remote Desktop session to **1aaVM**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and sign in by using the **oaaadmin** user account you created the previous exercise. When prompted, specify the full user name you recorded and the **Pa55w.rd1234** password.
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Azure Active Directory** and press the **Enter** key.
 
-1. In the Azure portal, on the **AdatumSync \| Overview** blade, click **Azure AD Connect**.
+1. In the Azure portal, on the **oneaboveallsync \| Overview** blade, click **Azure AD Connect**.
 
-1. On the **AdatumSync \| Azure AD Connect** blade, click the **Download Azure AD Connect** link. You will be redirected to the **Microsoft Azure Active Directory Connect** download page.
+1. On the **oneaboveallsync \| Azure AD Connect** blade, click the **Download Azure AD Connect** link. You will be redirected to the **Microsoft Azure Active Directory Connect** download page.
 
 1. On the **Microsoft Azure Active Directory Connect** download page, click **Download**.
 
@@ -269,22 +269,22 @@ In this task, you will install AD Connect on the virtual machine.
 
 1. On the **User sign-in** page, ensure that only the **Password Hash Synchronization** is enabled and click **Next**.
 
-1. On the **Connect to Azure AD** page, authenticate by using the credentials of the **syncadmin** user account you created in the previous exercise and click **Next**. 
+1. On the **Connect to Azure AD** page, authenticate by using the credentials of the **oaaadmin** user account you created in the previous exercise and click **Next**. 
 
-1. On the **Connect your directories** page, click the **Add Directory** button to the right of the **adatum.com** forest entry.
+1. On the **Connect your directories** page, click the **Add Directory** button to the right of the **1aboveall.com** forest entry.
 
 1. In the **AD forest account** window, ensure that the option to **Create new AD account** is selected, specify the following credentials, and click **OK**:
 
    |Setting|Value|
    |---|---|
-   |User Name|**ADATUM\\Student**|
+   |User Name|**1ABOVEALL\\johndoe**|
    |Password|**Pa55w.rd1234**|
 
-1. Back on the **Connect your directories** page, ensure that the **adatum.com** entry appears as a configured directory and click **Next**
+1. Back on the **Connect your directories** page, ensure that the **1aboveall.com** entry appears as a configured directory and click **Next**
 
 1. On the **Azure AD sign-in configuration** page, note the warning stating **Users will not be able to sign-in to Azure AD with on-premises credentials if the UPN suffix does not match a verified domain name**, enable the checkbox **Continue without matching all UPN suffixes to verified domain**, and click **Next**.
 
-    >**Note**: As explained earlier, this is expected, since you could not verify the custom Azure AD DNS domain **adatum.com**.
+    >**Note**: As explained earlier, this is expected, since you could not verify the custom Azure AD DNS domain **1aboveall.com**.
 
 1. On the **Domain and OU filtering** page, click the option **Sync selected domains and OUs**, clear all checkboxes, click only the checkbox next to the **ToSync** OU, and click **Next**.
 
@@ -305,23 +305,23 @@ In this task, you will install AD Connect on the virtual machine.
 
 In this task, you will verify that directory synchronization is working. 
 
-1. Within the Remote Desktop session to **adVM**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the Adatum Lab Azure AD tenant.
+1. Within the Remote Desktop session to **1aaVM**, in the Internet Explorer window displaying the Azure portal, navigate to the **Users - All users** blade of the 1ABOVEALL Lab Azure AD tenant.
 
-1. On the **Users \| All users** blade, note that the list of user objects includes the **aduser1** account. 
+1. On the **Users \| All users** blade, note that the list of user objects includes the **1aauser** account. 
 
-1. Select the **aduser1** account and, in the **Profile > Identity** section, note that the **Source** attribute is set to **Windows Server AD**.
+1. Select the **1aauser** account and, in the **Profile > Identity** section, note that the **Source** attribute is set to **Windows Server AD**.
 
-    >**Note**: You might have to wait a few minutes and select **Refresh** for the **aduser1** user account to appear.
+    >**Note**: You might have to wait a few minutes and select **Refresh** for the **1aauser** user account to appear.
 
-1. On the **Users \| All users** blade, select the **aduser1** entry.
+1. On the **Users \| All users** blade, select the **1aauser** entry.
 
-1. On the **aduser1 \| Profile** blade, in the **Job info** section, note that the **Department** attribute is not set.
+1. On the **1aauser \| Profile** blade, in the **Job info** section, note that the **Department** attribute is not set.
 
-1. Within the Remote Desktop session to **adVM**, switch to **Active Directory Administrative Center**, select the **aduser1** entry in the list of objects in the **ToSync** OU, and, in the **Tasks** pane, in the **ToSync** section, select **Properties**.
+1. Within the Remote Desktop session to **1aaVM**, switch to **Active Directory Administrative Center**, select the **1aauser** entry in the list of objects in the **ToSync** OU, and, in the **Tasks** pane, in the **ToSync** section, select **Properties**.
 
-1. In the **aduser1** window, in the **Organization** section, in the **Department** text box, type **Sales**, and select **OK**.
+1. In the **1aauser** window, in the **Organization** section, in the **Department** text box, type **Sales**, and select **OK**.
 
-1. Within the Remote Desktop session to **adVM**, start **Windows PowerShell**.
+1. Within the Remote Desktop session to **1aaVM**, start **Windows PowerShell**.
 
 1. From the **Administrator: Windows PowerShell** console, run the following to start Azure AD Connect delta synchronization:
 
@@ -331,7 +331,7 @@ In this task, you will verify that directory synchronization is working.
     Start-ADSyncSyncCycle -PolicyType Delta
     ```
 
-1. Switch to the Internet Explorer window displaying the **aduser1 \| Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
+1. Switch to the Internet Explorer window displaying the **1aauser \| Profile** blade, refresh the page and note that the **Department** property is set to **Sales**.
 
     >**Note**: You might need to wait for another minute and refresh the page again if the **Department** attribute remains not set.
 
@@ -342,7 +342,7 @@ In this task, you will verify that directory synchronization is working.
 
 >**Note**: Start by disabling Azure AD synchronization
 
-1. Within the Remote Desktop session to **adVM**, start Windows PowerShell as Administrator.
+1. Within the Remote Desktop session to **1aaVM**, start Windows PowerShell as Administrator.
 
 1. From the Windows PowerShell console, install the MsOnline PowerShell module by running the following (when prompted, in the NuGet provider is required to continue dialog box, type **Yes** and hit Enter.):
 
@@ -352,7 +352,7 @@ In this task, you will verify that directory synchronization is working.
     Install-Module MsOnline -Force
     ```
 
-1. From the Windows PowerShell console, connect to the AdatumSync Azure AD tenant by running the following (when prompted, sign in with the **syncadmin** credentials):
+1. From the Windows PowerShell console, connect to the oneaboveallsync Azure AD tenant by running the following (when prompted, sign in with the **oaaadmin** credentials):
 
     ```powershell
     Connect-MsolService
@@ -383,22 +383,22 @@ In this task, you will verify that directory synchronization is working.
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource group you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB06" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-SYN-RG" -Force -AsJob
     ```
 1. Close the **Cloud Shell** pane.
 
     >**Note**: Finally, remove the Azure AD tenant
 
-1. Back in the Azure portal, use the **Directory + subscription** filter to switch to the **AdatumSync** Azure Active Directory tenant.
+1. Back in the Azure portal, use the **Directory + subscription** filter to switch to the **oneaboveallsync** Azure Active Directory tenant.
 
-1. In the Azure portal, navigate to the **Users - All users** blade, click the entry representing the **syncadmin** user account, on the **syncadmin - Profile** blade click **Delete**, and, when prompted to confirm, click **OK**.
+1. In the Azure portal, navigate to the **Users - All users** blade, click the entry representing the **oaaadmin** user account, on the **oaaadmin - Profile** blade click **Delete**, and, when prompted to confirm, click **OK**.
 
-1. Repeat the same sequence of steps to delete the **aduser1** user account.
+1. Repeat the same sequence of steps to delete the **1aauser** user account.
 
-1. Navigate to the **AdatumSync - Overview** blade of the Azure AD tenant, click **Delete tenant**, on the **Delete directory 'AdatumSync'** blade, click the **Get permission to delete Azure resources** link, on the **Properties** blade of Azure Active Directory, set **Access management for Azure resources** to **Yes** and click **Save**.
+1. Navigate to the **oneaboveallsync - Overview** blade of the Azure AD tenant, click **Delete tenant**, on the **Delete directory 'oneaboveallsync'** blade, click the **Get permission to delete Azure resources** link, on the **Properties** blade of Azure Active Directory, set **Access management for Azure resources** to **Yes** and click **Save**.
 
 1. Sign out from the Azure portal and sign in back. 
 
-1. Navigate back to the **Delete directory 'AdatumSync'** blade and click **Delete**.
+1. Navigate back to the **Delete directory 'oneaboveallsync'** blade and click **Delete**.
 
 > For any additional  information regarding this task, refer to [https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-delete-howto](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-delete-howto)
