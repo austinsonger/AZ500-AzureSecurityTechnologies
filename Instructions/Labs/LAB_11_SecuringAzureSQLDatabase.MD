@@ -61,7 +61,7 @@ In this task, you will use a template to deploy the lab infrastructure.
    |Setting|Value|
    |---|---|
    |Subscription|the name of the Azure subscription you will be using in this lab|
-   |Resource group|click **Create new** and type the name **AZ500LAB11**|
+   |Resource group|click **Create new** and type the name **AZ500-SQL-RG1**|
    |Location|**(US) East US**|
 
 1. Click **Review + Create** and then click **Create**.
@@ -72,9 +72,9 @@ In this task, you will use a template to deploy the lab infrastructure.
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Resource groups** and press the **Enter** key.
 
-1. On the **Resource groups** blade, in the list of resource group, click the **AZ500LAB11** entry.
+1. On the **Resource groups** blade, in the list of resource group, click the **AZ500-SQL-RG1** entry.
 
-1. On the **AZ500LAB11** blade, click the entry representing the newly created SQL Server.
+1. On the **AZ500-SQL-RG1** blade, click the entry representing the newly created SQL Server.
 
 1. On the server blade, in the **Security** section, click **Security Center**.
 
@@ -98,9 +98,9 @@ In this task, you will discover and classify information in SQL database for GPD
 
 1. On the server blade, in the **Settings** section, click **SQL Databases**.
 
-1. In the list of databases, select the **AZ500LabDb** entry. 
+1. In the list of databases, select the **AZ500-SQL-DB1** entry. 
 
-1. On the **AZ500LabDb** SQL database blade, in the **Security** section, click **Data Discovery & Classification**.
+1. On the **AZ500-SQL-DB1** SQL database blade, in the **Security** section, click **Data Discovery & Classification**.
 
 1. On the **Data Discovery & Classification** blade, click the **Classification** tab.
 
@@ -148,9 +148,9 @@ In this task, you will first configure server level auditing and then configure 
 
 1. On the server blade, in the **Settings** section, click **SQL Databases**.
 
-1. In the list of databases, select the **AZ500LabDb** entry. 
+1. In the list of databases, select the **AZ500-SQL-DB1** entry. 
 
-1. On the **AZ500LabDb** SQL database blade, in the **Security** section, click **Auditing**. 
+1. On the **AZ500-SQL-DB1** SQL database blade, in the **Security** section, click **Auditing**. 
 
     >**Note**: This is database level auditing. Server-level auditing is already enabled. 
   
@@ -178,6 +178,6 @@ In this task, you will first configure server level auditing and then configure 
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource group you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB11" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-SQL-RG1" -Force -AsJob
     ```
 1. Close the **Cloud Shell** pane. 

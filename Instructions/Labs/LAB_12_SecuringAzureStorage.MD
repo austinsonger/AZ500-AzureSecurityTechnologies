@@ -54,8 +54,8 @@ In this task, you will create a virtual network.
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Resource group|click **Create new** and type the name **AZ500LAB12**|
-    |Name|**myVirtualNetwork**|
+    |Resource group|click **Create new** and type the name **AZ500-STO-RG1**|
+    |Name|**AZ500-STO-Vnet1**|
     |Region|**(US) East US**|
 
 1. On the **IP addresses** tab of the **Create virtual network** blade, set the **IPv4 address space** to **10.0.0.0/16**, in the **Subnet name** column, click **default** and, on the **Edit subnet** blade, specify the following settings and click **Save**:
@@ -75,11 +75,11 @@ In this task, you will create another subnet and enable a service endpoint on th
 
 1. In the Azure portal, navigate back to the **Virtual Networks** blade.
 
-1. On the **Virtual networks** blade, click the **myVirtualNetwork** entry.
+1. On the **Virtual networks** blade, click the **AZ500-STO-Vnet1** entry.
 
-1. On the **myVirtualNetwork** blade, in the **Settings** section, click **Subnets**.
+1. On the **AZ500-STO-Vnet1** blade, in the **Settings** section, click **Subnets**.
 
-1. On the **myVirtualNetwork \| Subnets** blade, click **+ Subnet**. 
+1. On the **AZ500-STO-Vnet1 \| Subnets** blade, click **+ Subnet**. 
 
 1. On the **Add subnet** blade, specify the following settings (leave others with their default values):
 
@@ -106,19 +106,19 @@ In this task, you will create a network security group with two outbound securit
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Resource group|**AZ500LAB12**|
-    |Name|**myNsgPrivate**|
+    |Resource group|**AZ500-STO-RG1**|
+    |Name|**AZ500-STO-NSG-PV**|
     |Region|**East US**|
 
 1. Click **Review + create** and then click **Create**.
 
     >**Note**: In the next steps, you will create an outbound security rule that allows communication to the Azure Storage service. 
 
-1. In the Azure portal, navigate back to the **Network security groups** blade and click the **myNsgPrivate** entry.
+1. In the Azure portal, navigate back to the **Network security groups** blade and click the **AZ500-STO-NSG-PV** entry.
 
-1. On the **myNsgPrivate** blade, in the **Settings** section, click **Outbound security rules**.
+1. On the **AZ500-STO-NSG-PV** blade, in the **Settings** section, click **Outbound security rules**.
 
-1. On the **myNsgPrivate \| Outbound security rules** blade, click **+ Add**.
+1. On the **AZ500-STO-NSG-PV \| Outbound security rules** blade, click **+ Add**.
 
 1. On the **Add outbound security rule** blade, specify the following settings to explicitly allow outbound traffic to Azure Storage (leave all other values with their default settings): 
 
@@ -131,11 +131,11 @@ In this task, you will create a network security group with two outbound securit
     |Protocol|**Any**|
     |Action|**Allow**|
     |Priority|**1000**|
-    |Name|**Allow-Storage-All**|
+    |Name|**Allow-All**|
 
 1. On the **Add outbound security rule** blade, click **Add** to create the new outbound rule. 
 
-1. On the **myNsgPrivate** blade, in the **Settings** section, click **Outbound security rules**, and then click **+ Add**.
+1. On the **AZ500-STO-NSG-PV** blade, in the **Settings** section, click **Outbound security rules**, and then click **+ Add**.
 
 1. On the **Add outbound security rule** blade, specify the following settings to explicitly deny outbound traffic to Internet (leave all other values with their default settings): 
 
@@ -148,13 +148,13 @@ In this task, you will create a network security group with two outbound securit
     |Protocol|**Any**|
     |Action|**Deny**|
     |Priority|**1100**|
-    |Name|**Deny-Internet-All**|
+    |Name|**Deny-All**|
 
     >**Note**: This rule overrides a default rule in all network security groups that allows outbound internet communication. 
 
     >**Note**: In the next steps, you will create an inbound security rule that allows Remote Desktop Protocol (RDP) traffic to the subnet. The rule overrides a default security rule that denies all inbound traffic from the internet. Remote Desktop connections are allowed to the subnet so that connectivity can be tested in a later step.
 
-1. On the **myNsgPrivate \| Outbound security rules** blade, in the **Settings** section, click **Inbound security rules** and then click **+ Add**.
+1. On the **AZ500-STO-NSG-PV \| Outbound security rules** blade, in the **Settings** section, click **Inbound security rules** and then click **+ Add**.
 
 1. On the **Add inbound security rule** blade, specify the following settings (leave all other values with their default values): 
 
@@ -167,7 +167,7 @@ In this task, you will create a network security group with two outbound securit
     |Protocol|**TCP**|
     |Action|**Allow**|
     |Priority|**1200**|                                                    
-    |Name|**Allow-RDP-All**|
+    |Name|**RDP-Allow**|
 
 1. On the **Add inbound security rule** blade, click **Add** to create the new inbound rule. 
 
@@ -177,7 +177,7 @@ In this task, you will create a network security group with two outbound securit
 
     |Setting|Value|
     |---|---|
-    |Virtual network|**myVirtualNetwork**|
+    |Virtual network|**AZ500-STO-Vnet1**|
     |Subnet|**Private**|
 
 #### Task 4: Create a storage account with a file share
@@ -193,7 +193,7 @@ In this task, you will create a storage account with a file share and obtain the
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Resource group|**AZ500LAB12**|
+    |Resource group|**AZ500-STO-RG1**|
     |Storage account name|any globally unique name between 3 and 24 in length consisting of letters and digits|
     |Location|**(US) EastUS**|
     |Performance|**Standard**|
@@ -206,9 +206,9 @@ In this task, you will create a storage account with a file share and obtain the
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Resource groups** and press the **Enter** key.
 
-1. On the **Resource groups** blade, in the list of resource group, click the **AZ500LAB12** entry.
+1. On the **Resource groups** blade, in the list of resource group, click the **AZ500-STO-RG1** entry.
 
-1. On the **AZ500LAB12** resource group blade, in the list of resources, click the entry representing the newly created storage account.
+1. On the **AZ500-STO-RG1** resource group blade, in the list of resources, click the entry representing the newly created storage account.
 
 1. On the storage account blade, in the **File service** section, **File shares** and then, click **+ File Share**.
 
@@ -216,16 +216,16 @@ In this task, you will create a storage account with a file share and obtain the
 
     |Setting|Value|
     |---|---|
-    |Name|**my-file-share**|
+    |Name|**AZ500-STO-FS1**|
     |Quota|**10**|
 
 1. On the **New file share** blade, click **Create**.
 
     >**Note**: Now, retrieve and record the PowerShell script that creates a drive mapping to the Azure file share. 
 
-1. On the storage account blade, in the list of file shares, click **my-file-share**.
+1. On the storage account blade, in the list of file shares, click **AZ500-STO-FS1**.
 
-1. On the **my-file-share** blade, click **Connect**.
+1. On the **AZ500-STO-FS1** blade, click **Connect**.
 
 1. On the **Connect** blade, on the **Windows** tab, copy the PowerShell script that creates a Z drive mapping to the file share. 
 
@@ -240,7 +240,7 @@ In this task, you will create a storage account with a file share and obtain the
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Virtual networks|**myVirtualNetwork**|
+    |Virtual networks|**AZ500-STO-Vnet1**|
     |Subnets|**Private**|
 
 1. On the **Add networks** blade, click **Enable** and then click **Add**. 
@@ -264,11 +264,11 @@ In this task, you will create two virtual machines one in the Private subnet and
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you will be using in this lab|
-    |Resource group|**AZ500LAB12**|
-    |Virtual machine name|**myVmPrivate**|
+    |Resource group|**AZ500-STO-RG1**|
+    |Virtual machine name|**AZ500-STO-VM-PV**|
     |Region|**(US)East US**|
     |Image|**Windows Server 2019 Datacenter**|
-    |Username|**localadmin**|
+    |Username|**azureadmin**|
     |Password|**Pa55w.rd1234**|
     |Public inbound ports|**None**|
     |Already have a Windows Server license|**No**|
@@ -281,9 +281,9 @@ In this task, you will create two virtual machines one in the Private subnet and
 
     |Setting|Value|
     |---|---|
-    |Virtual network|**myVirtualNetwork**|
+    |Virtual network|**AZ500-STO-Vnet1**|
     |Subnet|**Private (10.0.1.0/24)**|
-    |Public IP|**(new)myVmPrivate-ip**|
+    |Public IP|**(new)AZ500-STO-VM-PV-ip**|
     |NIC network security group|**None**|
 
 1. Click **Next: Management >**, on the **Management** tab of the **Create a virtual machine** blade, specify the following settings
@@ -304,11 +304,11 @@ In this task, you will create two virtual machines one in the Private subnet and
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you will be using in this lab|
-    |Resource group|**AZ500LAB12**|
-    |Virtual machine name|**myVmPublic**|
+    |Resource group|**AZ500-STO-RG1**|
+    |Virtual machine name|**AZ500-STO-VM-PL**|
     |Region|**(US)East US**|
     |Image|**Windows Server 2019 Datacenter**|
-    |Username|**localadmin**|
+    |Username|**azureadmin**|
     |Password|**Pa55w.rd1234**|
     |Public inbound ports|**None**|
     |Already have a Windows Server license|**No**|
@@ -321,9 +321,9 @@ In this task, you will create two virtual machines one in the Private subnet and
 
     |Setting|Value|
     |---|---|
-    |Virtual network|**myVirtualNetwork**|
+    |Virtual network|**AZ500-STO-Vnet1**|
     |Subnet|**Public (10.0.0.0/24)**|
-    |Public IP|**(new)myVmPublic-ip**|
+    |Public IP|**(new)AZ500-STO-VM-PL-ip**|
     |NIC network security group|**None**|
 
 1. Click **Next: Management >**, on the **Management** tab of the **Create a virtual machine** blade, specify the following settings
@@ -335,30 +335,30 @@ In this task, you will create two virtual machines one in the Private subnet and
 
 1. Click **Review + create**, on the **Review + create** blade, ensure that validation was successful andf click **Create**.
 
-    >**Note**: You can continue to the next task once the deployment of the **myVMPrivate** Azure VM is completed.
+    >**Note**: You can continue to the next task once the deployment of the **AZ500-STO-VM-PV** Azure VM is completed.
 
 #### Task 6: Test the storage connection from the private subnet to confirm that access is allowed
 
-In this task, you will connect to the myVMPrivate virtual machine via Remote Desktop and map a drive to the file share. 
+In this task, you will connect to the AZ500-STO-VM-PV virtual machine via Remote Desktop and map a drive to the file share. 
 
 1. Navigate back to the **Virtual machines** blade. 
 
-1. On the **Virtual machines** blade, click the **myVMPrivate** entry.
+1. On the **Virtual machines** blade, click the **AZ500-STO-VM-PV** entry.
 
-1. On the **myVMPrivate** blade, click **Connect** and, in the drop down menu, click **RDP**. 
+1. On the **AZ500-STO-VM-PV** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
-1. Click **Download RDP File** and use it to connect to the **myVMPrivate** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
+1. Click **Download RDP File** and use it to connect to the **AZ500-STO-VM-PV** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
 
     |Setting|Value|
     |---|---|
-    |User name|**localadmin**|
+    |User name|**azureadmin**|
     |Password|**Pa55w.rd1234**|
 
     >**Note**: Wait for the Remote Desktop session to open and Server Manager to load.
 
     >**Note**: You will now map drive Z to an Azure File share within the Remote Desktop session to a Windows Server 2019 computer
 
-1. Within the Remote Desktop session to **myVMPrivate**, click **Start** and then click **Windows PowerShell ISE**.
+1. Within the Remote Desktop session to **AZ500-STO-VM-PV**, click **Start** and then click **Windows PowerShell ISE**.
 
 1. Within the **Windows PowerShell ISE** window, open the **Script** pane, then paste and run the PowerShell script that you recorded earlier in this lab. The script has the following format:
 
@@ -368,7 +368,7 @@ In this task, you will connect to the myVMPrivate virtual machine via Remote Des
        # Save the password so the drive will persist on reboot
        cmd.exe /C "cmdkey /add:`"<storage_account_name>.file.core.windows.net`" /user:`"Azure\<storage_account_name>`"  /pass:`"<storage_account_key>`""
        # Mount the drive
-       New-PSDrive -Name Z -PSProvider FileSystem -Root "\\<storage_account_name>.file.core.windows.net\my-file-share" -Persist
+       New-PSDrive -Name Z -PSProvider FileSystem -Root "\\<storage_account_name>.file.core.windows.net\AZ500-STO-FS1" -Persist
     } else {
        Write-Error -Message "Unable to reach the Azure storage account via port 445. Check to make sure your organization or ISP is not blocking port 445, or use Azure P2S VPN, Azure S2S VPN, or Express Route to tunnel SMB traffic over a different port."
     }
@@ -380,12 +380,12 @@ In this task, you will connect to the myVMPrivate virtual machine via Remote Des
 1. Next, from the console pane of the **Windows PowerShell ISE** console, run the following to verify that the virtual machine has no outbound connectivity to the internet:
 
     ```powershell
-    Test-NetConnection -ComputerName www.bing.com -Port 80
+    Test-NetConnection -ComputerName www.google.com -Port 80
     ```
 
     >**Note**: The test will fail because the network security group associated with the Private subnet does not allow outbound access to the internet.
 
-1. Terminate the Remote Desktop session to the **myVMPrivate** Azure VM.
+1. Terminate the Remote Desktop session to the **AZ500-STO-VM-PV** Azure VM.
 
     >**Note**: At this point, you have confirmed that the virtual machine in the Private subnet can access the storage account. 
 
@@ -393,38 +393,38 @@ In this task, you will connect to the myVMPrivate virtual machine via Remote Des
 
 1. Navigate back to the **Virtual machines** blade. 
 
-1. On the **Virtual machines** blade, click the **myVMPublic** entry.
+1. On the **Virtual machines** blade, click the **AZ500-STO-VM-PL** entry.
 
-1. On the **myVMPublic** blade, click **Connect** and, in the drop down menu, click **RDP**. 
+1. On the **AZ500-STO-VM-PL** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
-1. Click **Download RDP File** and use it to connect to the **myVMPublic** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
+1. Click **Download RDP File** and use it to connect to the **AZ500-STO-VM-PL** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
 
     |Setting|Value|
     |---|---|
-    |User name|**localadmin**|
+    |User name|**azureadmin**|
     |Password|**Pa55w.rd1234**|
 
     >**Note**: Wait for the Remote Desktop session to open and Server Manager to load.
 
     >**Note**: You will now map drive Z to an Azure File share within the Remote Desktop session to a Windows Server 2019 computer
 
-1. Within the Remote Desktop session to **myVMPublic**, click **Start** and then click **Windows PowerShell ISE**.
+1. Within the Remote Desktop session to **AZ500-STO-VM-PL**, click **Start** and then click **Windows PowerShell ISE**.
 
-1. Within the **Windows PowerShell ISE** window, open the **Script** pane, then paste and run the same PowerShell script that you ran within the Remote Desktop session to the **myVMPrivate** Azure VM.
+1. Within the **Windows PowerShell ISE** window, open the **Script** pane, then paste and run the same PowerShell script that you ran within the Remote Desktop session to the **AZ500-STO-VM-PV** Azure VM.
 
     >**Note**: This time, you will receive the **New-PSDrive : Access is denied** error. 
 
-    >**Note**: Access is denied because the *myVmPublic* virtual machine is deployed in the Public subnet. The Public subnet does not have a service endpoint enabled for the Azure Storage. The storage account only allows network access from the Private subnet.
+    >**Note**: Access is denied because the *AZ500-STO-VM-PL* virtual machine is deployed in the Public subnet. The Public subnet does not have a service endpoint enabled for the Azure Storage. The storage account only allows network access from the Private subnet.
 
 1. Next, from the console pane of the **Windows PowerShell ISE** console, run the following to verify that the virtual machine has outbound connectivity to the internet: 
 
     ```powershell
-    Test-NetConnection -ComputerName www.bing.com -Port 80
+    Test-NetConnection -ComputerName www.google.com -Port 80
     ```
 
     >**Note**: The test will succeed because there is no network security group associated with the Public subnet.
 
-1. Terminate the Remote Desktop session to the **myVMPublic** Azure VM.
+1. Terminate the Remote Desktop session to the **AZ500-STO-VM-PL** Azure VM.
 
     >**Note**: At this point, you have confirmed that the virtual machine in the Public subnet cannot access the storage account, but has access to the internet.
 
@@ -440,7 +440,7 @@ In this task, you will connect to the myVMPrivate virtual machine via Remote Des
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource group you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB12" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-STO-RG1" -Force -AsJob
     ```
 
 1.  Close the **Cloud Shell** pane. 
