@@ -48,7 +48,7 @@ In this exercise, you will complete the following tasks:
 1. In the PowerShell session within the Cloud Shell pane, run the following to create a resource group that will be used in this lab:
   
     ```powershell
-    New-AzResourceGroup -Name AZ500LAB131415 -Location 'EastUS'
+    New-AzResourceGroup -Name AZ500-AM-RG1 -Location 'EastUS'
     ```
 
     >**Note**: This resource group will be used for labs 13, 14, and 15. 
@@ -56,22 +56,22 @@ In this exercise, you will complete the following tasks:
 1. In the PowerShell session within the Cloud Shell pane, run the following to create a new Azure virtual machine. 
 
     ```powershell
-    New-AzVm -ResourceGroupName "AZ500LAB131415" -Name "myVM" -Location 'EastUS' -VirtualNetworkName "myVnet" -SubnetName "mySubnet" -SecurityGroupName   "myNetworkSecurityGroup" -PublicIpAddressName "myPublicIpAddress" -OpenPorts 80,3389
+    New-AzVm -ResourceGroupName "AZ500-AM-RG1" -Name "AZ500-AM-VM1" -Location 'EastUS' -VirtualNetworkName "AZ500-AM-Vnet1" -SubnetName "AZ500-AM-Vnet1-SN" -SecurityGroupName   "AZ500-AM-Vnet1-NSG" -PublicIpAddressName "myPublicIpAddress" -OpenPorts 80,3389
     ```
 
 1.  When prompted for credentials:
 
     |Setting|Value|
     |---|---|
-    |User name|**localadmin**|
+    |User name|**azureadmin**|
     |Password|**Pa55w.rd1234**|
 
     >**Note**: Wait for the deployment to complete. 
 
-1. In the PowerShell session within the Cloud Shell pane, run the following to confirm that the virtual machine named **myVM** was created and its **ProvisioningState** is **Succeeded**.
+1. In the PowerShell session within the Cloud Shell pane, run the following to confirm that the virtual machine named **AZ500-AM-VM1** was created and its **ProvisioningState** is **Succeeded**.
 
     ```powershell
-    Get-AzVM -Name 'myVM' -ResourceGroupName 'AZ500LAB131415' | Format-Table
+    Get-AzVM -Name 'AZ500-AM-VM1' -ResourceGroupName 'AZ500-AM-RG1' | Format-Table
     ```
 
 1. Close the Cloud Shell pane. 
@@ -89,7 +89,7 @@ In this task, you will create a Log Analytics workspace.
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Resource group|**AZ500LAB131415**|
+    |Resource group|**AZ500-AM-RG1**|
     |Name|any valid, globally unique name|
     |Region|**(US) East US**|
 
@@ -107,13 +107,13 @@ In this task, you will enable the Log Analytics virtual machine extension. This 
 
     >**Note**: For the agent to be successfully installed, the virtual machine must be running.
 
-1. In the list of virtual machines, locate the entry representing the Azure VM **myVM** you deployed in the first task of this exercise and note that it is listed as **Not connected**.
+1. In the list of virtual machines, locate the entry representing the Azure VM **AZ500-AM-VM1** you deployed in the first task of this exercise and note that it is listed as **Not connected**.
 
-1. Click the **myVM** entry and then, on the **myVM** blade, click **Connect**. 
+1. Click the **AZ500-AM-VM1** entry and then, on the **AZ500-AM-VM1** blade, click **Connect**. 
 
 1. Wait for the virtual machine to connect to the Log Analytics workspace.
 
-    >**Note**: This may take a few minutes. The **Status** displayed on the **myVM** blade, will change from **Connecting** to **This workspace**. 
+    >**Note**: This may take a few minutes. The **Status** displayed on the **AZ500-AM-VM1** blade, will change from **Connecting** to **This workspace**. 
 
 #### Task 4: Collect virtual machine event and performance data
 

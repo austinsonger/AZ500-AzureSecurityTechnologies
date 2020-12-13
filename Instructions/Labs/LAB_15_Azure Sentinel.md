@@ -123,7 +123,7 @@ In this task, you will create a playbook. A security playbook is a collection of
     |Setting|Value|
     |---|---|
     |Subscription|the name of the Azure subscription you are using in this lab|
-    |Resource group|**AZ500LAB131415**|
+    |Resource group|**AZ500-AM-RG1**|
     |Location|**(US) East US**|
     |Playbook Name|**Change-Incident-Severity**|
     |User Name|your email address|
@@ -134,9 +134,9 @@ In this task, you will create a playbook. A security playbook is a collection of
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Resource groups** and press the **Enter** key.
 
-1. On the **Resource groups** blade, in the list of resource group, click the **AZ500LAB131415** entry.
+1. On the **Resource groups** blade, in the list of resource group, click the **AZ500-AM-RG1** entry.
 
-1. On the **AZ500LAB131415** resource group blade, in the list of resources, click the entry representing the newly created **Change-Incident-Severity** logic app.
+1. On the **AZ500-AM-RG1** resource group blade, in the list of resources, click the entry representing the newly created **Change-Incident-Severity** logic app.
 
 1. On the **Change-Incident-Severity** blade, click **Edit**.
 
@@ -166,7 +166,7 @@ In this task, you will create a playbook. A security playbook is a collection of
 
     |Setting|Value|
     |---|---|
-    |Name|**Playbook Demo**|
+    |Name|**AZ500-PB1**|
     |Tactics|**Initial Access**|
 
 1. Click **Next: Set rule logic >**.
@@ -194,7 +194,7 @@ In this task, you will create a playbook. A security playbook is a collection of
 
 1. On the **Review and create** tab of the **Analytic rule wizard - Create new rule** blade, click **Create**.
 
-    >**Note**: You now have a new active rule called **Playbook Demo**. If an event identified by the rue logic occurs, it will result in a medium severity alert, which will generate a corresponding incident.
+    >**Note**: You now have a new active rule called **AZ500-PB1**. If an event identified by the rue logic occurs, it will result in a medium severity alert, which will generate a corresponding incident.
 
 #### Task 6: Invoke an incident and review the associated actions.
 
@@ -241,6 +241,6 @@ In this task, you will create a playbook. A security playbook is a collection of
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource group you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB131415" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-AM-RG1" -Force -AsJob
     ```
 1. Close the **Cloud Shell** pane.
