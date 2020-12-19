@@ -36,7 +36,7 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2017-03-01-preview",
-            "name": "[concat(variables('sqlServerName'), '/AZ500LabDb')]",
+            "name": "[concat(variables('sqlServerName'), '/AZ500-Db1')]",
             "location": "eastus",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
