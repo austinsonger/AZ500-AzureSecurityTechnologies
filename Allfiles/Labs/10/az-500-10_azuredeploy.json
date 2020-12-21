@@ -10,7 +10,7 @@
         },
       "vmName": {
         "type": "string",
-        "defaultValue": "az500-10-vm1",
+        "defaultValue": "AZ500-KV-RG1",
         "metadata": {
           "description": "VM name"
         }
@@ -29,7 +29,7 @@
         },
        "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "az500-10-vnet1",
+            "defaultValue": "AZ500-KV-Vnet1",
             "metadata": {
                 "description": "Virtual network name"
         }
@@ -37,12 +37,12 @@
     },
   "variables": {
     "vmName": "[parameters('vmName')]",
-    "nic1": "az500-10-nic1",
+    "nic1": "AZ500-KV-Vnet1-nic1",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
-    "subnet0Name": "subnet0",
-    "publicIPAddressName": "az500-10-pip1",
+    "subnet0Name": "AZ500-KV-Vnet1-SN",
+    "publicIPAddressName": "AZ500-KV-Vnet1-IP1",
     "subnet0Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnet0Name'))]",
-    "networkSecurityGroupName": "az500-10-nsg1"
+    "networkSecurityGroupName": "AZ500-KV-Vnet1-NSG1"
   },
     "resources": [
         {
