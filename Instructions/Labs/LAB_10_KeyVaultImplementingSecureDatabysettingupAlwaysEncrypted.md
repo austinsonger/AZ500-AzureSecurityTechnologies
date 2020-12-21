@@ -89,7 +89,7 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
 
    |Setting|Value|
    |---|---|
-   |User name|**Student**|
+   |User name|**johndoe**|
    |Password|**Pa55w.rd1234**|
 
     >**Note**: Wait for the Remote Desktop session and **Server Manager** to load.  
@@ -345,7 +345,7 @@ In this task, you will create an Azure SQL database and identify its ADO.NET con
     |Setting|Value|
     |---|---|
     |Server name|any valid, globally unique name|
-    |Server admin login|**Student**|
+    |Server admin login|**johndoe**|
     |Password|**Pa55w.rd1234**|
     |Location|**(US) East US**|
 
@@ -380,7 +380,7 @@ In this task, you will connect to the SQL Database by using SQL Server Managemen
 
    |Setting|Value|
    |---|---|
-   |User name|**Student**|
+   |User name|**johndoe**|
    |Password|**Pa55w.rd1234**|
 
    >**Note**: Wait for the Remote Desktop session and **Server Manager** to load.  
