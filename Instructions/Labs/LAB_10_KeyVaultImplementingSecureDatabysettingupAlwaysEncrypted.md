@@ -5,10 +5,6 @@ lab:
 ---
 
 # Lab 10: Key Vault (Implementing Secure Data by setting up Always Encrypted)
-# Student lab manual
-
-## Lab scenario
-
 You have been asked to create a proof of concept application that makes use of the Azure SQL Database support for Always Encrypted functionality. All of the secrets and keys used in this scenario should be stored in the key vault. The application should be registered in Azure Active Directory (Azure AD) in order to enhance its security posture. To accomplish these objectives, the proof of concept should include:
 
 - Creating an Azure key vault and storing keys and secrets in the vault.
@@ -28,7 +24,7 @@ In this lab, you will complete the following exercises:
 - **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.json**
 - **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.parameters.json**
 - **\\Allfiles\\Labs\\10\\program.cs**
- 
+
 ### Exercise 1: Configure the key vault with a key and a secret
 
 ### Estimated timing: 60 minutes
@@ -43,8 +39,6 @@ In this exercise, you will complete the following tasks:
 - Task 4: Add a secret to the key vault
 
 #### Task 1: Deploy and configure an Azure VM with Visual Studio 2019 and SQL Server Management Studio
-    
->**Note**: If you are using a lab provider that has both Visual Studio 2019 and SQL Server Management studio installed on your lab computer you can skip this step and go straight to Task 2.
 
 In this task, you will deploy an Azure VM, connect to it, and download and install Visual Studio 2019 and SQL Server Management Studio (SSMS).
 
@@ -71,13 +65,13 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
    |Setting|Value|
    |---|---|
    |Subscription|the name of the Azure subscription you will be using in this lab|
-   |Resource group|click **Create new** and type the name **AZ500LAB10**|
+   |Resource group|click **Create new** and type the name **AZ500-KV-RG1**|
    |Location|**(US) East US**|
    |Vm Size|**Standard_D2s_v3**|
-   |Vm Name|**az500-10-vm1**|
-   |Admin Username|**Student**|
+   |Vm Name|**AZ500-KV-VM1**|
+   |Admin Username|**johndoe**|
    |Admin Password|**Pa55w.rd1234**|
-   |Virtual Network Name|**az500-10-vnet1**|
+   |Virtual Network Name|**AZ500-KV-Vnet1**|
 
     >**Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
 
@@ -87,11 +81,11 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Virtual machines** and press the **Enter** key.
 
-1. On the **Virtual machines** blade, click the **az500-10-vm1** entry. 
+1. On the **Virtual machines** blade, click the **AZ500-KV-VM1** entry. 
 
-1. On the **az500-10-vm1** blade, click **Connect** and, in the drop down menu, click **RDP**. 
+1. On the **AZ500-KV-VM1** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
-1. Click **Download RDP File** and use it to connect to the **az500-10-vm1** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
+1. Click **Download RDP File** and use it to connect to the **AZ500-KV-VM1** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
 
    |Setting|Value|
    |---|---|
@@ -100,9 +94,9 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
 
     >**Note**: Wait for the Remote Desktop session and **Server Manager** to load.  
 
-    >**Note**: The remaining steps in this lab are performed within the Remote Desktop session to the **az500-10-vm1** Azure VM. 
+    >**Note**: The remaining steps in this lab are performed within the Remote Desktop session to the **AZ500-KV-VM1** Azure VM. 
 
-1. Within the Remote Desktop session to the **az500-10-vm1** Azure VM, in **Server Manager**, click **Local Server** and then click **IE Enhanced Security Configuration**.
+1. Within the Remote Desktop session to the **AZ500-KV-VM1** Azure VM, in **Server Manager**, click **Local Server** and then click **IE Enhanced Security Configuration**.
 
 1. In the **Internet Explorer Enhanced Security Configuration** dialog box, set both options to **Off** and click **OK**.
 
@@ -120,13 +114,13 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
 
     >**Note**: Do not wait for the Visual Studio 2019 installation to complete but instead proceed to the next task. 
 
-> Result: You have deployed and initiated configuration of an Azure VM **az500-10-vm1** that you will use in the second exercise of this lab.
+> Result: You have deployed and initiated configuration of an Azure VM **AZ500-KV-VM1** that you will use in the second exercise of this lab.
 
 #### Task 2: Create and configure a Key Vault
 
 In this task, you will create a lab resource group and a key vault. You will also configure the key vault permissions.
 
-1. Within the Remote Desktop session to the **az500-10-vm1** Azure VM, sign-in to the Azure portal **`https://portal.azure.com/`**. (Skip this step if you did not complete Task 1)
+1. Within the Remote Desktop session to the **AZ500-KV-VM1** Azure VM, sign-in to the Azure portal **`https://portal.azure.com/`**. (Skip this step if you did not complete Task 1)
 
     >**Note**: Sign in to the Azure portal using an account that has the Owner or Contributor role in the Azure subscription you are using for this lab.
 
@@ -134,19 +128,19 @@ In this task, you will create a lab resource group and a key vault. You will als
 
 1. Ensure **PowerShell** is selected in the drop-down menu in the upper-left corner of the Cloud Shell pane.
 
-1. In the PowerShell session within the Cloud Shell pane, run the following to create a key vault in the resource group **AZ500LAB10**. The key vault name must be unique. Remember the name you have chosen. You will need it throughout this lab.  
+1. In the PowerShell session within the Cloud Shell pane, run the following to create a key vault in the resource group **AZ500-KV-RG1**. The key vault name must be unique. Remember the name you have chosen. You will need it throughout this lab.  
 
 1. If you skipped Task 1 run the following command to create a Resource Group, otherwsie go to the next task
 
     ```powershell
-    New-AzResourceGroup -Name 'AZ500LAB10' -Location eastus
+    New-AzResourceGroup -Name 'AZ500-KV-RG1' -Location eastus
     ```
 
 1. Create a key vault
 
     ```powershell
     $kvName = 'az500kv' + $(Get-Random)
-    New-AzKeyVault -VaultName $kvName -ResourceGroupName 'AZ500LAB10' -Location 'eastus'
+    New-AzKeyVault -VaultName $kvName -ResourceGroupName 'AZ500-KV-RG1' -Location 'eastus'
     ```
 
     >**Note**: The output of this displays the vault name and the vault URI. The Vault URI is in the format `https://<vault_name>.vault.azure.net/`
@@ -155,9 +149,9 @@ In this task, you will create a lab resource group and a key vault. You will als
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Resource groups** and press the **Enter** key.
 
-1. On the **Resource groups** blade, in the list of resource group, click the **AZ500LAB10** entry.
+1. On the **Resource groups** blade, in the list of resource group, click the **AZ500-KV-RG1** entry.
 
-1. On the **AZ500LAB10** blade, click the entry representing the newly created key vault. 
+1. On the **AZ500-KV-RG1** blade, click the entry representing the newly created key vault. 
 
 1. On the key vault blade, in the **Settings** section, click **Access Policies** and then click **+ Add Access Policy**.
 
@@ -184,12 +178,12 @@ In this task, you will add a key to the key vault and view information about the
 1. In the PowerShell session within the Cloud Shell pane, run the following to add a software-protected key to the Key Vault: 
 
     ```powershell
-    $kv = Get-AzKeyVault -ResourceGroupName 'AZ500LAB10'
+    $kv = Get-AzKeyVault -ResourceGroupName 'AZ500-KV-RG1'
 
-    $key = Add-AZKeyVaultKey -VaultName $kv.VaultName -Name 'MyLabKey' -Destination 'Software'
+    $key = Add-AZKeyVaultKey -VaultName $kv.VaultName -Name 'AZ500-KV-KV-Key1' -Destination 'Software'
     ```
 
-    >**Note**: The name of the key is MyLabKey
+    >**Note**: The name of the key is AZ500-KV-KV-Key1
 
 1. In the PowerShell session within the Cloud Shell pane, run the following to verify the key was created:
 
@@ -207,11 +201,11 @@ In this task, you will add a key to the key vault and view information about the
 
 1. Back in the Azure portal, on the key vault blade, in the **Settings** section, click **Keys**.
 
-1. In the list of keys, click the **MyLabKey** entry and then, on the **MyLabKey** blade, click the entry representing the current version of the key.
+1. In the list of keys, click the **AZ500-KV-KV-Key1** entry and then, on the **AZ500-KV-KV-Key1** blade, click the entry representing the current version of the key.
 
     >**Note**: Examine the information about the key you created.
 
-    >**Note**: You can reference any key by using the key identifier. To get the most current version, reference `https://<key_vault_name>.vault.azure.net/keys/MyLabKey` or get the specific version with: `https://<key_vault_name>.vault.azure.net/keys/MyLabKey/<key_version>`
+    >**Note**: You can reference any key by using the key identifier. To get the most current version, reference `https://<key_vault_name>.vault.azure.net/keys/AZ500-KV-KV-Key1` or get the specific version with: `https://<key_vault_name>.vault.azure.net/keys/AZ500-KV-KV-Key1/<key_version>`
 
 
 #### Task 4: Add a Secret to Key Vault
@@ -273,31 +267,31 @@ In this task, you will enable a client application to access the Azure SQL Datab
 
     |Setting|Value|
     |----|----|
-    |Name|**sqlApp**|
-    |Redirect URI (optional)|**Web** and **https://sqlapp**|
+    |Name|**SQLApp1**|
+    |Redirect URI (optional)|**Web** and **https://SQLApp1**|
 
 1. On the **Register an application** blade, click **Register**. 
 
-    >**Note**: Once the registration is completed, the browser will automatically redirect you to **sqlApp** blade. 
+    >**Note**: Once the registration is completed, the browser will automatically redirect you to **SQLApp1** blade. 
 
-1. On the **sqlApp** blade, identify the value of **Application (client) ID**. 
+1. On the **SQLApp1** blade, identify the value of **Application (client) ID**. 
 
     >**Note**: Record this value. You will need it in the next task.
 
-1. On the **sqlApp** blade, in the **Manage** section, click **Certificates & secrets**.
+1. On the **SQLApp1** blade, in the **Manage** section, click **Certificates & secrets**.
 
-1. On the **sqlApp \| Certificates & secrets** blade, click **+ New client secret**
+1. On the **SQLApp1 \| Certificates & secrets** blade, click **+ New client secret**
 
 1. In the **Add a client secret** pane, specify the following settings:
 
     |Setting|Value|
     |----|----|
-    |Description|**Key1**|
+    |Description|**KV-Key1**|
     |Expires|**in 1 year**|
 	
 1. Click **Add** to update the application credentials.
 
-1. On the **sqlApp \| Certificates & secrets** blade, identify the value of **Key1**.
+1. On the **SQLApp1 \| Certificates & secrets** blade, identify the value of **KV-Key1**.
 
     >**Note**: Record this value. You will need it in the next task. 
 
@@ -319,13 +313,13 @@ In this task, you will grant the newly registered app permissions to access secr
     ```
 1. In the PowerShell session within the Cloud Shell pane, run the following to create a variable storing the key vault name.
 	```
-    $kvName = (Get-AzKeyVault -ResourceGroupName 'AZ500LAB10').VaultName
-    ```
+    $kvName = (Get-AzKeyVault -ResourceGroupName 'AZ500-KV-RG1').VaultName
+   ```
 
 1. In the PowerShell session within the Cloud Shell pane, run the following to grant permissions on the key vault to the application you registered in the previous task:
 
     ```powershell
-    Set-AZKeyVaultAccessPolicy -VaultName $kvName -ResourceGroupName AZ500LAB10 -ServicePrincipalName $applicationId -PermissionsToKeys get,wrapKey,unwrapKey,sign,verify,list
+    Set-AZKeyVaultAccessPolicy -VaultName $kvName -ResourceGroupName AZ500-KV-RG1 -ServicePrincipalName $applicationId -PermissionsToKeys get,wrapKey,unwrapKey,sign,verify,list
     ```
 
 1. Close the Cloud Shell pane. 
@@ -343,8 +337,8 @@ In this task, you will create an Azure SQL database and identify its ADO.NET con
     |Setting|Value|
     |---|--- |
     |Subscription|the name of the Azure subscription you will be using in this lab|
-    |Resource group|**AZ500LAB10**|
-    |Database name|**medical**|
+    |Resource group|**AZ500-KV-RG1**|
+    |Database name|**health**|
 
 1. Directly below the **Server** drop down list, click the **Create new** and, on the **New server** blade, specify the following settings and click **OK** (leave others with their default values):
 
@@ -359,7 +353,7 @@ In this task, you will create an Azure SQL database and identify its ADO.NET con
 
     >**Note**: Wait for the SQL database to be created. Provisioning should take about 2 minutes. 
 
-1. In the Azure portal, navigate back to the **SQL databases** blade and, in the list of SQL databases, click the **medical** entry.
+1. In the Azure portal, navigate back to the **SQL databases** blade and, in the list of SQL databases, click the **health** entry.
 
 1. On the SQL database blade, in the **Settings** section, click **Connection strings**. 
 
@@ -374,15 +368,15 @@ In this task, you will create an Azure SQL database and identify its ADO.NET con
 
 In this task, you will connect to the SQL Database by using SQL Server Management Studio and create a table. You will then encrypt two data columns using an autogenerated key from the Azure Key Vault. 
 
->**Note**: If you are using a lab provider that has both Visual Studio 2019 and SQL Server Management studio installed on your lab computer, proceed directly to step 10 of this task. If not, then make sure that the deployment of the **az500-10-vm1** Azure VM you started in the first task of the first exercise has completed. Once that is the case, proceed to step 1. 
+>**Note**: If you are using a lab provider that has both Visual Studio 2019 and SQL Server Management studio installed on your lab computer, proceed directly to step 10 of this task. If not, then make sure that the deployment of the **AZ500-KV-VM1** Azure VM you started in the first task of the first exercise has completed. Once that is the case, proceed to step 1. 
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Virtual machines** and press the **Enter** key.
 
-1. On the **Virtual machines** blade, click the **az500-10-vm1** entry. 
+1. On the **Virtual machines** blade, click the **AZ500-KV-VM1** entry. 
 
-1. On the **az500-10-vm1** blade, click **Connect** and, in the drop down menu, click **RDP**. 
+1. On the **AZ500-KV-VM1** blade, click **Connect** and, in the drop down menu, click **RDP**. 
 
-1. Click **Download RDP File** and use it to connect to the **az500-10-vm1** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
+1. Click **Download RDP File** and use it to connect to the **AZ500-KV-VM1** Azure VM via Remote Desktop. When prompted to authenticate, provide the following credntials:
 
    |Setting|Value|
    |---|---|
@@ -391,25 +385,25 @@ In this task, you will connect to the SQL Database by using SQL Server Managemen
 
    >**Note**: Wait for the Remote Desktop session and **Server Manager** to load.  
 
-   >**Note**: The following steps are performed in the Remote Desktop session to the **az500-10-vm1** Azure VM. 
+   >**Note**: The following steps are performed in the Remote Desktop session to the **AZ500-KV-VM1** Azure VM. 
 
 1. In **Server Manager**, click **Local Server** and then click **IE Enhanced Security Configuration**.
 
 1. In the **Internet Explorer Enhanced Security Configuration** dialog box, set both options to **Off** and click **OK**.
 
-1. Within the Remote Desktop session to **az500-10-vm1**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and 
+1. Within the Remote Desktop session to **AZ500-KV-VM1**, start Internet Explorer, navigate to the [Azure portal](https://portal.azure.com), and 
 
 1. In the Azure portal, in the **Search resources, services, and docs** text box at the top of the Azure portal page, type **Azure SQL Database** and press the **Enter** key.
 
-1. On the **Azure SQL Database** blade, select the entry representing the **medical** database.
+1. On the **Azure SQL Database** blade, select the entry representing the **health** database.
 
-1. In the Azure portal, on the blade of the **medical** SQL database, click **Overview**, identify **Server name**, and then click **Set server firewall**.  
+1. In the Azure portal, on the blade of the **health** SQL database, click **Overview**, identify **Server name**, and then click **Set server firewall**.  
 
     >**Note**: Record the server name. You will need the server name later in this task.
 
 1. On the **Firewall settings** blade, click **+ Add client IP**, next click **Save** and then click **OK**.
 
-    >**Note**: This modifies the server firewall settings, allowing connections to the medical database from the public IP address associated with the computer you are currently using. 
+    >**Note**: This modifies the server firewall settings, allowing connections to the health database from the public IP address associated with the computer you are currently using. 
 
 1. Click **Start**, in the **Start** menu, expand the **Microsoft SQL Server Tools 18** folder, and click the **Micosoft SQL Server Management Studio** menu item.
 
@@ -420,14 +414,14 @@ In this task, you will connect to the SQL Database by using SQL Server Managemen
     |Server Type|**Database Engine**|
     |Server Name|the server name you identified earlier in this task|
     |Authentication: **SQL Server Authentication**
-    |Login|**Student**|
+    |Login|**johndoe**|
     |Password|**Pa55w.rd1234**|
 
 1. In the **Connect to Server** dialog box, click **Connect**.
 
 1. Within the **SQL Server Management Studio** console, in the **Object Explorer** pane, expand the **Databases** folder.
 
-1. In the **Object Explorer** pane, right-click the **medical** database and click **New Query**.
+1. In the **Object Explorer** pane, right-click the **health** database and click **New Query**.
 
 1. Paste the following code into the query window and click **Execute**. This will create a **Patients** table.
 
@@ -445,7 +439,7 @@ In this task, you will connect to the SQL Database by using SQL Server Managemen
 		[BirthDate] [date] NOT NULL 
      PRIMARY KEY CLUSTERED ([PatientId] ASC) ON [PRIMARY] );
      ```
-1. After the table is created successfully, in the **Object Explorer** pane, expand the **medical** database node, the **tables** node, right-click the **dbo.Patients** node, and click **Encrypt Columns**. 
+1. After the table is created successfully, in the **Object Explorer** pane, expand the **health** database node, the **tables** node, right-click the **dbo.Patients** node, and click **Encrypt Columns**. 
 
     >**Note**: This will initiate the **Always Encrypted** wizard displays. 
 
@@ -461,7 +455,7 @@ In this task, you will connect to the SQL Database by using SQL Server Managemen
 
 1. Once the encryption process is complete, on the **Results** page, click **Close**.
 
-1. In the **SQL Server Management Studio** console, in the **Object Explorer** pane, under the **medical** node, expand the **Security** and **Always Encrypted Keys** subnodes. 
+1. In the **SQL Server Management Studio** console, in the **Object Explorer** pane, under the **health** node, expand the **Security** and **Always Encrypted Keys** subnodes. 
 
     >**Note**: The **Always Encrypted Keys** subnode contains the **Column Master Keys** and **Column Encryption Keys** subfolders.
 
@@ -482,8 +476,8 @@ Then you will create a Console application using Visual Studio to load data into
 
     |Setting|Value|
     |---|---|
-    |Project name|**OpsEncrypt**|
-    |Solution name|**OpsEncrypt**|
+    |Project name|**ExampleApp**|
+    |Solution name|**ExampleApp**|
     |Framework|**.NET Framework 4.7.2.**|
 
 1. In the Visual Studio console, click the **Tools** menu, in the drop down menu, click **NuGet Package Manager**, and, in the cascading menu, click **Package Manager Console**.
@@ -503,7 +497,7 @@ Then you will create a Console application using Visual Studio to load data into
 
 1. In the Visual Studio window, in the **Program.cs** pane, in line 16, replace the `<client id noted earlier>` placeholder with the value of **Application (client) ID** of the registered app you recorded earlier in the lab. 
 
-1. In the Visual Studio window, in the **Program.cs** pane, in line 17, replace the `<key value noted earlier>` placeholder with the the value of **Key1** of the registered app you recorded earlier in the lab. 
+1. In the Visual Studio window, in the **Program.cs** pane, in line 17, replace the `<key value noted earlier>` placeholder with the the value of **KV-Key1** of the registered app you recorded earlier in the lab. 
 
 1. In the Visual Studio console, click the **Start** button to initiate the build of the console application and start it.
 
@@ -511,7 +505,7 @@ Then you will create a Console application using Visual Studio to load data into
 
 1. Leave the console app running and switch to the **SQL Management Studio** console. 
 
-1. In the **Object Explorer** pane, right-click the medical database and, in the right-click menu, click **New Query**.
+1. In the **Object Explorer** pane, right-click the health database and, in the right-click menu, click **New Query**.
 
 1. From the query window, run the following query to verify that the data that loaded into the database from the console app is encrypted.
 
@@ -540,7 +534,7 @@ Then you will create a Console application using Visual Studio to load data into
 1. In the PowerShell session within the Cloud Shell pane, run the following to remove the resource groups you created in this lab:
   
     ```powershell
-    Remove-AzResourceGroup -Name "AZ500LAB10" -Force -AsJob
+    Remove-AzResourceGroup -Name "AZ500-KV-RG1" -Force -AsJob
     ```
 
 1.  Close the **Cloud Shell** pane. 
