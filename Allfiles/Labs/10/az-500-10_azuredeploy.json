@@ -10,7 +10,7 @@
         },
       "vmName": {
         "type": "string",
-        "defaultValue": "AZ500-KV-RG1",
+        "defaultValue": "AZ500-KV-VM1",
         "metadata": {
           "description": "VM name"
         }

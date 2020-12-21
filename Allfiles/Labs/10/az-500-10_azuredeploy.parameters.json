@@ -1,15 +1,24 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "vmSize": {
-            "value": "Standard_D2s_v3"
-        },
-        "adminUsername": {
-            "value": "johndoe"
-        },
-        "adminPassword": {
-            "value": "Pa55w.rd1234"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmSize": {
+      "value": "Standard_D2s_v3"
+    },
+    "vmName": {
+      "value": "AZ500-KV-VM1"
+    },
+    "adminUsername": {
+      "value": "johndoe"
+    },
+    "adminPassword": {
+      "value": "Pa55w.rd1234"
+    },
+    "virtualNetworkName": {
+      "value": "AZ500-KV-Vnet1"
     }
+  }
 }
+
+
+
