@@ -21,8 +21,8 @@ In this lab, you will complete the following exercises:
 
 ## Lab files:
 
-- **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.json**
-- **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.parameters.json**
+- **\\Allfiles\\Labs\\10\\AZ500-KV_azuredeploy.json**
+- **\\Allfiles\\Labs\\10\\AZ500-KV_azuredeploy.parameters.json**
 - **\\Allfiles\\Labs\\10\\program.cs**
 
 ### Exercise 1: Configure the key vault with a key and a secret
@@ -50,13 +50,13 @@ In this task, you will deploy an Azure VM, connect to it, and download and insta
 
 1. On the **Custom deployment** blade, click the **Build your own template in the editor** option.
 
-1. On the **Edit template** blade, click **Load file**, locate the **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.json** file and click **Open**.
+1. On the **Edit template** blade, click **Load file**, locate the **\\Allfiles\\Labs\\10\\AZ500-KV_azuredeploy.json** file and click **Open**.
 
 1. On the **Edit template** blade, click **Save**.
 
 1. Back on the **Custom deployment** blade, click **Edit parameters**.
 
-1. On the **Edit parameters** blade, click **Load file**, locate the **\\Allfiles\\Labs\\10\\az-500-10_azuredeploy.parameters.json** file and click **Open**.
+1. On the **Edit parameters** blade, click **Load file**, locate the **\\Allfiles\\Labs\\10\\AZ500-KV_azuredeploy.parameters.json** file and click **Open**.
 
 1. On the **Edit parameters** blade, click **Save**.
 
